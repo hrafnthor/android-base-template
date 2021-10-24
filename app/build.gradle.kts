@@ -7,7 +7,7 @@ android {
     compileSdk = 30
     buildToolsVersion = "30.0.3"
     defaultConfig {
-        applicationId = "is.hth"
+        applicationId = "is.hth.app"
         minSdk = 23
         targetSdk = 30
         versionCode = 1

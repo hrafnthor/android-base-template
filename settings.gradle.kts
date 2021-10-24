@@ -183,5 +183,5 @@ dependencyResolutionManagement {
         }
     }
 }
-rootProject.name = "Adventures"
-include(":adventures")
+rootProject.name = "app"
+include(":app")

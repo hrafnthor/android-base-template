@@ -1,4 +1,4 @@
-package `is`.hth.adventures.ui.theme
+package `is`.hth.app.ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

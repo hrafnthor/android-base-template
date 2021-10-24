@@ -1,4 +1,4 @@
-package `is`.hth.adventures
+package `is`.hth.app
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -8,13 +8,13 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import `is`.hth.adventures.ui.theme.AdventuresTheme
+import `is`.hth.app.ui.theme.AppTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            AdventuresTheme {
+            AppTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
                     Greeting("Android")
@@ -32,7 +32,7 @@ fun Greeting(name: String) {
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    AdventuresTheme {
+    AppTheme {
         Greeting("Android")
     }
 }
