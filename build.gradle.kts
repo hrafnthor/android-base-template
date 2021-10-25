@@ -1,4 +1,5 @@
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
+import app.DependencyUpdates
 
 buildscript {
     repositories {
@@ -15,6 +16,46 @@ buildscript {
 plugins {
     // Used for dependency update checking
     id("com.github.ben-manes.versions") version "0.38.0"
+    // Used for running enforced code styles as part of Gradle builds
+    id("com.diffplug.gradle.spotless") version "4.3.0"
+}
+
+subprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    apply {
+        plugin("com.diffplug.gradle.spotless")
+    }
+    configure<com.diffplug.gradle.spotless.SpotlessExtension> {
+        kotlin {
+            target("**/*.kt")
+            targetExclude("$buildDir/**/*.kt")
+            targetExclude("bin/**/*.kt")
+            ktlint("0.42.1")
+            // Applies licensing header to all applicable .kt files
+            // licenseHeaderFile(rootProject.file("spotless/copyright.kt"))
+        }
+        kotlinGradle {
+            target("*.gradle.kts")
+            ktlint()
+        }
+    }
+
+    tasks {
+        // Enforce Kotlin compile configurations across subprojects
+        withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).configureEach {
+            kotlinOptions {
+                // Treat all Kotlin warnings as errors
+                allWarningsAsErrors = true
+
+                // Set JVM target to 11
+                jvmTarget = JavaVersion.VERSION_11.toString()
+            }
+        }
+    }
 }
 
 tasks {
@@ -23,28 +64,23 @@ tasks {
         useJUnitPlatform()
     }
 
-    register("clean", Delete::class) {
-        delete(rootProject.buildDir)
-    }
-
-    // Set dependency update task configuration to filter unstable updates.
-    // see https://github.com/ben-manes/gradle-versions-plugin for details
-    register("dependencyStableUpdates", DependencyUpdatesTask::class) {
+    /**
+     * Update dependencyUpdates task to reject versions which are more 'unstable' than our
+     * current version.
+     */
+    named("dependencyUpdates", DependencyUpdatesTask::class).configure {
         checkConstraints = true
         checkForGradleUpdate = true
         rejectVersionIf {
-            // reject all unstable dependency versions
-            isUnstable(candidate.version)
+            val current = DependencyUpdates.versionToRelease(currentVersion)
+            // If we're using a SNAPSHOT, ignore since we must be doing so for a reason.
+            if (current == app.ReleaseType.SNAPSHOT) {
+                true
+            } else {
+                // Otherwise we reject if the candidate is more 'unstable' than our version
+                val candidate = DependencyUpdates.versionToRelease(candidate.version)
+                candidate.isLessStableThan(current)
+            }
         }
     }
-
-}
-
-fun isUnstable(version: String): Boolean {
-    val hasUnstableKeywords = listOf("beta", "alpha", "rc").any {
-        version.toLowerCase().contains(it)
-    }
-    // Capture formats where {number} is repeated with {dot} in between
-    val regex = "^(?:[0-9]+\\.)+[0-9]+$".toRegex()
-    return hasUnstableKeywords || regex.matches(version).not()
 }

@@ -10,8 +10,6 @@ dependencyResolutionManagement {
     }
 
     versionCatalogs {
-
-
         create("catalog") {
             //#region: Kotlin
 
@@ -82,7 +80,7 @@ dependencyResolutionManagement {
                 .versionRef(androidxComposeVersionRef)
 
             alias("androidx-test-compose-ui")
-                .to("androidx.compose.ui", "ui-test-junit")
+                .to("androidx.compose.ui", "ui-test-junit4")
                 .versionRef(androidxComposeVersionRef)
 
             //#region: UI
