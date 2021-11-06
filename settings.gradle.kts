@@ -206,6 +206,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "app"
-include(":app")
+rootProject.name = "android_base_template"
 include(":core")
+include(":app")
