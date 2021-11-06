@@ -4,12 +4,11 @@ plugins {
 }
 
 android {
-    compileSdk = 30
-    buildToolsVersion = "30.0.3"
+    compileSdk = Integer.parseInt(catalog.versions.android.sdk.compile.get())
     defaultConfig {
         applicationId = "is.hth.app"
-        minSdk = 23
-        targetSdk = 30
+        minSdk = Integer.parseInt(catalog.versions.android.sdk.min.get())
+        targetSdk = Integer.parseInt(catalog.versions.android.sdk.target.get())
         versionCode = 1
         versionName = "1.0"
 
@@ -18,6 +17,9 @@ android {
             "de.mannodermaus.junit5.AndroidJUnit5Builder"
 
         vectorDrawables {
+            // Turns off PNG generation for versions lower than 21, rather
+            // using the support libraries so vector drawables will always
+            // be used.
             useSupportLibrary = true
         }
     }
@@ -31,19 +33,15 @@ android {
             )
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString()
-    }
+
     buildFeatures {
         compose = true
     }
+    
     composeOptions {
         kotlinCompilerExtensionVersion = catalog.versions.androidx.compose.get()
     }
+
     packagingOptions {
         resources {
             excludes.apply {
@@ -54,6 +52,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":core"))
 
     //#region: Android/x base
 
