@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<full-backup-content>
+    <!-- Define what content should be backed up as per changes made in Android 12      -->
+    <!-- See https://developer.android.com/guide/topics/data/autobackup#IncludingFiles  -->
+</full-backup-content>
