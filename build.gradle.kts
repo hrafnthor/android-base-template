@@ -20,12 +20,7 @@ plugins {
     id("com.diffplug.gradle.spotless") version "4.3.0"
 }
 
-subprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
-
+allprojects {
     apply {
         plugin("com.diffplug.gradle.spotless")
     }
@@ -44,15 +39,24 @@ subprojects {
         }
     }
 
-    tasks {
-        // Enforce Kotlin compile configurations across subprojects
-        withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).configureEach {
+    gradle.projectsEvaluated {
+        // Enforce Java compile configurations across all projects
+        tasks.withType(JavaCompile::class).configureEach {
+            sourceCompatibility = JavaVersion.VERSION_11.toString()
+            targetCompatibility = JavaVersion.VERSION_11.toString()
+        }
+
+        // Enforce Kotlin compile configurations across all projects
+        tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).configureEach {
             kotlinOptions {
                 // Treat all Kotlin warnings as errors
                 allWarningsAsErrors = true
 
                 // Set JVM target to 11
                 jvmTarget = JavaVersion.VERSION_11.toString()
+
+                sourceCompatibility = JavaVersion.VERSION_11.toString()
+                targetCompatibility = JavaVersion.VERSION_11.toString()
             }
         }
     }
