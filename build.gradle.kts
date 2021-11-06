@@ -20,6 +20,8 @@ plugins {
     id("com.github.ben-manes.versions") version "0.38.0"
     // Used for running enforced code styles as part of Gradle builds
     id("com.diffplug.gradle.spotless") version "4.3.0"
+    // Used for checking project dependency health via Gradle using 'buildHealth'
+    id("com.autonomousapps.dependency-analysis") version "0.78.0"
 }
 
 allprojects {
