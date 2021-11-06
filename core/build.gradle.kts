@@ -1,6 +1,7 @@
 plugins {
     id("com.android.library")
     id("kotlin-android")
+    id("hu.supercluster.paperwork")
 }
 
 android {
@@ -14,7 +15,7 @@ android {
 
     buildTypes {
         getByName("release") {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -37,6 +38,12 @@ android {
 }
 
 dependencies {
+
+    //#region: Utilities
+
+    implementation(catalog.paperwork)
+
+    //#endregion
 
     //#region: Testing
 

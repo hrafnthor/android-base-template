@@ -109,6 +109,15 @@ dependencyResolutionManagement {
 
             //#endregion
 
+            //#region: Utilities
+
+            val paperworkVersion: String by settings
+            alias("paperwork")
+                .to("hu.supercluster", "paperwork")
+                .versionRef(version("paperwork", paperworkVersion))
+
+            //#endregion
+
             //#region: Testing
 
             //#region: JVM
@@ -187,6 +196,8 @@ dependencyResolutionManagement {
             alias("androidx-test-espresso")
                 .to("androidx.test.espresso", "espresso-core")
                 .versionRef(version("androidx-espresso", androidxEspressoVersion))
+
+            //#endregion
 
             //#endregion
 
