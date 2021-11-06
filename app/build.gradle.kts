@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("kotlin-android")
+    id("hu.supercluster.paperwork")
 }
 
 android {
@@ -73,6 +74,12 @@ dependencies {
     //#endregion
 
     implementation(catalog.androidx.lifecycle.runtime)
+
+    //#region: Utilities
+
+    implementation(catalog.paperwork)
+
+    //#endregion
 
     //#region: Testing
 
