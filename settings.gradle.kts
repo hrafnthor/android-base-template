@@ -27,6 +27,19 @@ dependencyResolutionManagement {
 
             //#region: Android
 
+            //#region: SDK
+
+            val androidCompileSdkVersion: String by settings
+            version("android-sdk-compile", androidCompileSdkVersion)
+
+            val androidTargetSdkVersion: String by settings
+            version("android-sdk-target", androidTargetSdkVersion)
+
+            val androidMinSdkVersion: String by settings
+            version("android-sdk-min", androidMinSdkVersion)
+            
+            //#endregion
+
             val androidMaterialVersion: String by settings
             alias("android-material")
                 .to("com.google.android.material", "material")
@@ -181,5 +194,7 @@ dependencyResolutionManagement {
         }
     }
 }
+
 rootProject.name = "app"
 include(":app")
+include(":core")
